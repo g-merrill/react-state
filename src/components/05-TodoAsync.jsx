@@ -9,11 +9,16 @@ export default function Todo() {
 
   useEffect(() => {
     const getData = async () => {
+      console.log(await cointoss())
       const res = await fetch(URL)
       const data = await res.json()      
       setTodoList(data)
     }
-    getData()
+    try {
+      getData()
+    } catch (error) {
+      console.error(error)
+    }
   }, [])
   
 
@@ -30,7 +35,7 @@ export default function Todo() {
           todoList.map(todo => {
             return (
               <ul key={todo.id}>
-                <li>{todo.label} <button onClick={() => onDone(todo.id)}>Done!</button></li>
+                <li>{todo.label} <button onClick={() => onDone(todo.id)} style={{ cursor: 'pointer' }}>Done!</button></li>
               </ul>
             )
           })
