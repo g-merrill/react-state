@@ -20,32 +20,24 @@ export default function Todo() {
 	const [todos, setTodos] = useState(initialTodos)
 
 	const completeTodo = (id) => {
-		const updatedTodos = todos.map((todo) => {
-			if (todo.id === id) {
-				return { ...todo, completed: true }
-			} else {
-				return todo
-			}
-		})
-		setTodos(updatedTodos)
+		const filteredTodos = todos.filter((todo) => todo.id !== id)
+		setTodos(filteredTodos)
 	}
 
 	return (
 		<div className="container">
 			<h2>Todo</h2>
 			<div>
-				{todos.map((todo) => {
-					return (
-						<ul key={todo.id}>
-							<li>
+				<ul>
+					{todos.map((todo) => {
+						return (
+							<li key={todo.id}>
 								{todo.label}{" "}
-								<button onClick={() => completeTodo(todo.id)}>
-									{todo.completed ? "Done!" : "Mark complete"}
-								</button>
+								<button onClick={() => completeTodo(todo.id)}>Done!</button>
 							</li>
-						</ul>
-					)
-				})}
+						)
+					})}
+				</ul>
 			</div>
 		</div>
 	)

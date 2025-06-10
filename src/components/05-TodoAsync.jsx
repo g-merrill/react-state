@@ -7,8 +7,19 @@ const API_KEY = import.meta.env.VITE_API_KEY // add .env file at the root
 export default function Todo() {
   const [todoList, setTodoList] = useState([])
 
-  const onDone = id => evt => {
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch(URL)
+      const data = await res.json()      
+      setTodoList(data)
+    }
+    getData()
+  }, [])
+  
 
+  const onDone = id => {
+    const filteredTodos = todoList.filter(todo => todo.id !== id)
+    setTodoList(filteredTodos)
   }
 
   return (
@@ -19,7 +30,7 @@ export default function Todo() {
           todoList.map(todo => {
             return (
               <ul key={todo.id}>
-                <li>{todo.label} <button onClick={onDone(todo.id)}>Done!</button></li>
+                <li>{todo.label} <button onClick={() => onDone(todo.id)}>Done!</button></li>
               </ul>
             )
           })
