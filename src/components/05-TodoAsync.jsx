@@ -5,6 +5,8 @@ const URL = "http://localhost:9009/api/todos"
 const API_KEY = import.meta.env.VITE_API_KEY // add .env file at the root
 
 export default function Todo() {
+	const [loading, setLoading] = useState(true)
+	const [coinError, setCoinError] = useState(false)
 	const [todoList, setTodoList] = useState([])
 
 	useEffect(() => {
@@ -19,7 +21,9 @@ export default function Todo() {
 			setTodoList(todosData)
 		} catch (error) {
 			console.error(error)
+			setCoinError(true)
 		}
+		setLoading(false)
 	}
 
 	const deleteTodo = async (id) => {
@@ -32,16 +36,20 @@ export default function Todo() {
 		<div className="container">
 			<h2>Todo Async</h2>
 			<div>
-				{todoList.map((todo) => {
-					return (
-						<ul key={todo.id}>
-							<li>
-								{todo.label}{" "}
-								<button onClick={() => deleteTodo(todo.id)}>Done!</button>
-							</li>
-						</ul>
-					)
-				})}
+				{loading
+					? "Fetching todos..."
+					: coinError
+					? "Cointoss failed - try again!"
+					: todoList.map((todo) => {
+							return (
+								<ul key={todo.id}>
+									<li>
+										{todo.label}{" "}
+										<button onClick={() => deleteTodo(todo.id)}>Done!</button>
+									</li>
+								</ul>
+							)
+					  })}
 			</div>
 		</div>
 	)
