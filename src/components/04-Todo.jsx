@@ -33,7 +33,7 @@ export default function Todo() {
 						return (
 							<li key={todo.id}>
 								{todo.label}{" "}
-								<button onClick={() => completeTodo(todo.id)} style={{ cursor: 'pointer' }}>Done!</button>
+								<button onClick={() => completeTodo(todo.id)}>Done!</button>
 							</li>
 						)
 					})}

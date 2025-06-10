@@ -47,3 +47,7 @@ nav {
 .emoji {
   font-size: 5rem;
 }
+
+button {
+  cursor: pointer;
+}
